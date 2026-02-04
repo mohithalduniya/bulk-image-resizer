@@ -78,7 +78,7 @@ export async function POST(req: NextRequest) {
     });
 
     file.on("error", (err) => {
-      errors.push(err.message);
+      errors.push(err instanceof Error ? err.message : "Upload failed.");
     });
 
     file.on("limit", () => {
@@ -86,6 +86,7 @@ export async function POST(req: NextRequest) {
       file.unpipe(writeStream);
       writeStream.destroy();
       safeUnlink(originalPath);
+      file.resume();
     });
 
     const stored = new Promise<void>((resolve, reject) => {

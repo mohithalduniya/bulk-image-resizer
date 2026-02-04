@@ -29,7 +29,9 @@ export async function GET(req: NextRequest) {
       outputExt: img.outputExt,
       originalSize: img.originalSize,
       processedSize: img.processedSize ?? 0,
-      savedPercent: percentSaved(img.originalSize, img.processedSize ?? 0),
+      savedPercent: img.processedSize
+        ? percentSaved(img.originalSize, img.processedSize)
+        : 0,
       compressedLabel: img.processedSize
         ? formatKB(img.processedSize)
         : null,
