@@ -123,7 +123,7 @@ export async function POST(req: NextRequest) {
   });
 
   bb.on("error", (error) => {
-    errors.push(error.message);
+    errors.push(error instanceof Error ? error.message : "Upload failed.");
   });
 
   await new Promise<void>((resolve, reject) => {
