@@ -68,7 +68,8 @@ export async function createBatchZip(batch: BatchRecord) {
 
     output.on("close", () => resolve());
     output.on("error", (err) => reject(err));
-    archive.on("error", (err) => reject(err));
+   archive.on("error", (err: Error) => reject(err));
+
 
     archive.pipe(output);
 
